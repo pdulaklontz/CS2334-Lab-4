@@ -6,6 +6,7 @@ public class Playlist {
 	
 	private static final int MIN_CAPACITY = 3;
 	
+	// Constructors
 	Playlist()
 	{
 		songs = new Song[MIN_CAPACITY];
@@ -45,6 +46,8 @@ public class Playlist {
 	}
 	
 	// Adding Methods
+	public boolean addSong(Song song) { return addSong(numSongs, song); }
+	
 	public boolean addSong(int index, Song song)
 	{
 		if (numSongs == songs.length) {
@@ -66,5 +69,41 @@ public class Playlist {
 		numSongs++;
 		
 		return true;
+	}
+	
+	public int addSongs(Playlist playlist)
+	{
+		if (playlist == null) {
+			return 0;
+		}
+		
+		int numSongsAdded = 0;
+		
+		for (int i = 0; i < playlist.getNumSongs(); i++) {
+			if (addSong(playlist.getSong(i))) {
+				numSongsAdded++;
+			}
+		}
+		return numSongsAdded;
+	}
+	
+	// Removing Methods
+	public Song removeSong() { return removeSong(numSongs - 1); }
+	
+	public Song removeSong(int index)
+	{
+		if (index < 0 || index >= numSongs) {
+			return null;
+		}
+		
+		Song songRemoved = songs[index];
+		
+		for (int i = index; i < numSongs - 1; i++) {
+			songs[i] = songs[i + 1];
+		}
+		
+		numSongs --;
+		
+		return songRemoved;
 	}
 }
